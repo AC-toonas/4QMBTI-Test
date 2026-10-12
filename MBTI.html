@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MBTI Quiz</title>
+</head>
+<body>
+
+<div id="screen-start">
+  <h1>MBTI Quiz</h1>
+  <button onclick="startQuiz()">Start</button>
+</div>
+
+<div id="screen-q1" style="display:none;">
+  <h2>Are you Introvert or Extrovert?</h2>
+  <button onclick="answer('EI','I')">Introvert</button>
+  <button onclick="answer('EI','E')">Extrovert</button>
+</div>
+
+<div id="screen-q2" style="display:none;">
+  <h2>Are you Sensing or Intuitive?</h2>
+  <button onclick="answer('SN','S')">Sensing</button>
+  <button onclick="answer('SN','N')">Intuitive</button>
+</div>
+
+<div id="screen-q3" style="display:none;">
+  <h2>Are you Thinking or Feeling?</h2>
+  <button onclick="answer('TF','T')">Thinking</button>
+  <button onclick="answer('TF','F')">Feeling</button>
+</div>
+
+<div id="screen-q4" style="display:none;">
+  <h2>Are you Judging or Perceiving?</h2>
+  <button onclick="answer('JP','J')">Judging</button>
+  <button onclick="answer('JP','P')">Perceiving</button>
+</div>
+
+<div id="screen-result" style="display:none;">
+  <h2>Your MBTI type is:</h2>
+  <h1 id="result-type"></h1>
+  <button onclick="restart()">Restart</button>
+</div>
+
+<script>
+  var answers = {};
+  var questions = ['q1','q2','q3','q4'];
+  var currentIndex = -1;
+
+  function showScreen(id) {
+    var screens = document.querySelectorAll('body > div');
+    for (var i = 0; i < screens.length; i++) {
+      screens[i].style.display = 'none';
+    }
+    document.getElementById(id).style.display = 'block';
+  }
+
+  function startQuiz() {
+    answers = {};
+    currentIndex = 0;
+    showScreen('screen-' + questions[currentIndex]);
+  }
+
+  function answer(key, value) {
+    answers[key] = value;
+    currentIndex++;
+    if (currentIndex < questions.length) {
+      showScreen('screen-' + questions[currentIndex]);
+    } else {
+      var type = answers['EI'] + answers['SN'] + answers['TF'] + answers['JP'];
+      document.getElementById('result-type').textContent = type;
+      showScreen('screen-result');
+    }
+  }
+
+  function restart() {
+    showScreen('screen-start');
+  }
+</script>
+
+</body>
+</html>
